@@ -3,12 +3,11 @@ package br.com.rollo.rafael.zxchallenge.controller.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.br.CNPJ;
-
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 
 import br.com.rollo.rafael.zxchallenge.model.Pdv;
+import br.com.rollo.rafael.zxchallenge.validation.UniqueCNPJ;
 
 public class PdvDto {
 
@@ -17,7 +16,7 @@ public class PdvDto {
 	private String tradingName;
 	@NotBlank
 	private String ownerName;
-	@CNPJ
+	@UniqueCNPJ
 	private String document;
 	@NotNull
 	private MultiPolygon coverageArea;
