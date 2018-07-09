@@ -28,40 +28,69 @@ public class PdvControllerTest {
 
 	@Autowired
 	private TestRestTemplate testRestTemplate;
+	
+	private PdvDto validPdv = PdvDtoBuilder.buildFromValidJson();
+	private PdvDto invalidPdv = PdvDtoBuilder.buildFromInvalidJson();
 
 	@Test
 	public void shouldReturnCreatedStatusOnCreatePdv() throws Exception {
-
-		PdvDto pdvDto = PdvDtoBuilder.buildFromValidJson();
-
-		RequestEntity<PdvDto> request = RequestEntity
-				.post(new URI("/api/pdv"))
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.body(pdvDto);
-
-		ResponseEntity<PdvDto> response = this.testRestTemplate.exchange(request, PdvDto.class);
+		
+		ResponseEntity<PdvDto> response = createPdv(validPdv, PdvDto.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-
 	}
 
 	@Test
 	public void shouldReturnBadRequestOnCreatePdv() throws Exception {
 
-		PdvDto pdvDto = PdvDtoBuilder.buildFromInvalidJson();
-
-		RequestEntity<PdvDto> request = RequestEntity
-				.post(new URI("/api/pdv"))
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.body(pdvDto);
-
-		ResponseEntity<ValidationErrorDto> response = this.testRestTemplate.exchange(request, ValidationErrorDto.class);
+		ResponseEntity<ValidationErrorDto> response = createPdv(invalidPdv, ValidationErrorDto.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 		
 		ValidationErrorDto errors = response.getBody();
 		assertThat(errors.getNumberOfErrors()).isEqualTo(3);
 	}
-
 	
+	@Test
+	public void shouldReturnFoundPdvOnGetById() throws Exception {
+		
+		createPdv(validPdv, PdvDto.class);
+		
+		RequestEntity<Void> request = RequestEntity
+				.get(new URI("/api/pdv/1"))
+				.accept(MediaType.APPLICATION_JSON)
+				.build();
+		
+		ResponseEntity<PdvDto> response = this.testRestTemplate.exchange(request, PdvDto.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		
+		PdvDto pdv = response.getBody();
+		assertThat(pdv.getId()).isEqualTo(1);
+		assertThat(pdv).isEqualTo(validPdv);
+		
+	}
+
+	@Test
+	public void shouldReturnPdvNotFoundOnGetById() throws Exception {
+		
+		createPdv(validPdv, PdvDto.class);
+		
+		RequestEntity<Void> request = RequestEntity
+				.get(new URI("/api/pdv/25"))
+				.accept(MediaType.APPLICATION_JSON)
+				.build();
+		
+		ResponseEntity<PdvDto> response = this.testRestTemplate.exchange(request, PdvDto.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+		assertThat(response.getBody()).isNull();
+	}
+
+	private <T> ResponseEntity<T> createPdv(PdvDto pdv, Class<T> expectedResponseType) throws Exception {
+
+		RequestEntity<PdvDto> request = RequestEntity
+				.post(new URI("/api/pdv"))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.body(pdv);
+
+		return this.testRestTemplate.exchange(request, expectedResponseType);
+	}
 }

@@ -13,4 +13,6 @@ public interface PdvRepository extends Repository<Pdv, Integer>{
 	Pdv save(Pdv pdv);
 	
 	Optional<Pdv> findByDocument(String cnpj);
+
+	Optional<Pdv> findById(Integer id);
 }

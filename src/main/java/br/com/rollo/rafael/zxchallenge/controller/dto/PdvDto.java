@@ -80,4 +80,54 @@ public class PdvDto {
 	public Pdv toPdv() {
 		return new Pdv(this.tradingName, this.ownerName, this.document, this.coverageArea, this.address);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((coverageArea == null) ? 0 : coverageArea.hashCode());
+		result = prime * result + ((document == null) ? 0 : document.hashCode());
+		result = prime * result + ((ownerName == null) ? 0 : ownerName.hashCode());
+		result = prime * result + ((tradingName == null) ? 0 : tradingName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PdvDto other = (PdvDto) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (coverageArea == null) {
+			if (other.coverageArea != null)
+				return false;
+		} else if (!coverageArea.equals(other.coverageArea))
+			return false;
+		if (document == null) {
+			if (other.document != null)
+				return false;
+		} else if (!document.equals(other.document))
+			return false;
+		if (ownerName == null) {
+			if (other.ownerName != null)
+				return false;
+		} else if (!ownerName.equals(other.ownerName))
+			return false;
+		if (tradingName == null) {
+			if (other.tradingName != null)
+				return false;
+		} else if (!tradingName.equals(other.tradingName))
+			return false;
+		return true;
+	}
+	
 }
