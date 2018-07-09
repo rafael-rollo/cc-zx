@@ -29,6 +29,4 @@ public class PdvController {
 		return new ResponseEntity<Pdv>(createdPdv, HttpStatus.CREATED);
 	}
 	
-	
-
 }

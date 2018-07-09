@@ -15,4 +15,8 @@ public class ValidationErrorDto {
 	public List<FieldErrorDto> getFieldErrors() {
 		return fieldErrors;
 	}
+	
+	public int getNumberOfErrors() {
+		return this.fieldErrors.size();
+	}
 }

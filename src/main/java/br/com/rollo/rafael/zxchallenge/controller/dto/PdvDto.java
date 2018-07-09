@@ -80,5 +80,4 @@ public class PdvDto {
 	public Pdv toPdv() {
 		return new Pdv(this.tradingName, this.ownerName, this.document, this.coverageArea, this.address);
 	}
-
 }
