@@ -28,5 +28,7 @@ public class PdvController {
 		Pdv createdPdv = pdvRepository.save(pdvDto.toPdv());
 		return new ResponseEntity<Pdv>(createdPdv, HttpStatus.CREATED);
 	}
+	
+	
 
 }
