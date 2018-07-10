@@ -2,6 +2,7 @@ package br.com.rollo.rafael.zxchallenge.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -14,11 +15,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfiguration {
 	
 	@Bean
-	public Docket api() {
+	@Profile("dev")
+	public Docket swaggerSettings() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("br.com.rollo.rafael.zxchallenge.controller"))
-				.paths(PathSelectors.ant("/api/*"))
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any())
 				.build();
 	}
 }

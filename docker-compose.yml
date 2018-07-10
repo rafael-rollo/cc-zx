@@ -1,0 +1,22 @@
+version: '3'
+
+services: 
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=zx_challenge
+  
+  spring-boot-app:
+    image: rollorafael/zxchallenge:latest
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    restart: on-failure
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=zx_challenge
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=root

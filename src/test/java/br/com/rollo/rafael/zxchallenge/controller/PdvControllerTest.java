@@ -70,7 +70,7 @@ public class PdvControllerTest {
 
 	@Test
 	public void shouldReturnPdvNotFoundOnGetById() throws Exception {
-		
+
 		createPdv(validPdv, PdvDto.class);
 		
 		RequestEntity<Void> request = RequestEntity
