@@ -3,9 +3,12 @@ version: '3'
 services: 
   db:
     image: mysql:5.7
+    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=zx_code_challenge_dev
+      - MYSQL_DATABASE=zx_code_challenge
+      - MYSQL_USER=ze_delivery
+      - MYSQL_PASSWORD=ZeDelivery@2018
   
   spring-boot-app:
     image: rollorafael/zxchallenge:latest
@@ -17,7 +20,7 @@ services:
     environment:
       - DATABASE_HOST=db
       - DATABASE_PORT=3306
-      - DATABASE_NAME=zx_code_challenge_dev
-      - DATABASE_USER=root
-      - DATABASE_PASSWORD=root
-      - SPRING_PROFILES_ACTIVE=dev
+      - DATABASE_NAME=zx_code_challenge
+      - DATABASE_USER=ze_delivery
+      - DATABASE_PASSWORD=ZeDelivery@2018
+      - SPRING_PROFILES_ACTIVE=prod

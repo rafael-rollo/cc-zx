@@ -1,0 +1,11 @@
+version: '3'
+
+services: 
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=zx_code_challenge_test
+    ports:
+      - 3360:3306
+      
