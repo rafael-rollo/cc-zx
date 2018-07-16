@@ -9,6 +9,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 
 import br.com.rollo.rafael.zxchallenge.controller.dto.PdvDto;
+import br.com.rollo.rafael.zxchallenge.model.Pdv;
 import br.com.rollo.rafael.zxchallenge.util.GeometryUtils;
 import br.com.rollo.rafael.zxchallenge.util.JsonUtils;
 
@@ -27,6 +28,11 @@ public class PdvDtoBuilder {
 	
 	public PdvDtoBuilder withTradingName(String tradingName) {
 		this.pdvDto.setTradingName(tradingName);
+		return this;
+	}
+	
+	public PdvDtoBuilder withDocument(String document) {
+		this.pdvDto.setDocument(document);
 		return this;
 	}
 
@@ -62,6 +68,10 @@ public class PdvDtoBuilder {
 
 	public static PdvDto buildFromInvalidJson() {
 		return new JsonUtils<>(PdvDto.class).readFrom("invalid-pdv");
+	}
+
+	public Pdv buildAsPdv() {
+		return this.pdvDto.toPdv();
 	}
 
 
